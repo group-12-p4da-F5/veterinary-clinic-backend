@@ -1,15 +1,22 @@
 package org.factoriaf5.user;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
-@Getter
-public enum UserRole {
-    ADMIN("Administrador"),
-    USER("Usuario");
+@Entity
+@Table(name = "roles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserRole {
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String label;
-
-    UserRole(String label) {
-        this.label = label;
-    }
+    @Column(name = "name")
+    private String name;
 }

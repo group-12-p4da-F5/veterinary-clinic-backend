@@ -12,18 +12,13 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    @Column(name = "dni", length = 20)
+    private String dni;
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(nullable = false)
-    private String role;
+     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private UserRole role;
 }
