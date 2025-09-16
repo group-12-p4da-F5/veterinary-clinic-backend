@@ -12,13 +12,19 @@ import lombok.*;
 public class User {
 
     @Id
-    @Column(name = "dni", length = 20)
-    private String dni;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-     @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRole role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserProfile profile;
 }

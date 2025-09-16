@@ -13,7 +13,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Builder
 public class UserRole {
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

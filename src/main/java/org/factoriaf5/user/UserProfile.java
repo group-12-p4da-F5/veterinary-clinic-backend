@@ -23,14 +23,13 @@ public class UserProfile {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "dni", length = 20)
+    private String dni;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId("dni")
-    @JoinColumn(name = "dni", referencedColumnName = "dni")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }
