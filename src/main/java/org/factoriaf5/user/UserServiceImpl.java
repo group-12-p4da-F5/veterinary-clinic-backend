@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return repository.findByProfileEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado por email"));
+    }
+
+    @Override
     public User createUser(User user) {
         return repository.save(user);
     }
