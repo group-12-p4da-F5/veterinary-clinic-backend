@@ -1,4 +1,5 @@
 package org.factoriaf5.user;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserProfile {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,13 +24,14 @@ public class UserProfile {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "dni", length = 20)
-    private String dni;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "dni", referencedColumnName = "dni")
+
     private User user;
 }

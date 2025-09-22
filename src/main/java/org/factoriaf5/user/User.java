@@ -12,11 +12,8 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
+    @Column(name = "dni", length = 20)
+    private String dni;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
@@ -26,5 +23,4 @@ public class User {
     private UserRole role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserProfile profile;
-}
+    private UserProfile profile;}
