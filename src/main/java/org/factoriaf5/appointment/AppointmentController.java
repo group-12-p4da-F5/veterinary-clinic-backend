@@ -6,6 +6,7 @@ import org.factoriaf5.appointment.dto.UpdateAppointmentStatusDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -45,6 +46,12 @@ public class AppointmentController {
             @RequestBody UpdateAppointmentStatusDTO dto) {
 
         return ResponseEntity.ok(service.updateStatus(id, dto));
+    }
+
+    @GetMapping("/available/{date}") // Recibe "yyyy-MM-dd"
+    public List<String> getAvailableHours(@PathVariable String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return service.getAvailableHours(localDate);
     }
 
 }

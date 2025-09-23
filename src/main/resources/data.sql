@@ -39,7 +39,7 @@ VALUES
 INSERT INTO appointments (date_time, type, reason, status, patient_id)
 VALUES
 ('2025-09-25 10:00:00', 'STANDARD', 'Revisión general', 'PENDING', 1),
-('2025-09-26 14:30:00', 'EMERGENCY', 'Accidente doméstico', 'PENDING', 2);
+('2025-09-26 13:30:00', 'EMERGENCY', 'Accidente doméstico', 'PENDING', 2);
 
 -- =======================
 -- Tratamientos
