@@ -1,67 +1,46 @@
 package org.factoriaf5.patient;
-
+import org.factoriaf5.patient.dto.CreatePatientDTO;
+import org.factoriaf5.patient.dto.PatientDTO;
+import org.factoriaf5.user.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository repository;
+    private final UserRepository userRepository;
 
-    public PatientServiceImpl(PatientRepository repository) {
+    public PatientServiceImpl(PatientRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<Patient> getAllPatients() {
-        return repository.findAll();
+    public List<PatientDTO> getPatientsByOwner(String dni) {
+        return repository.findByManagerDni(dni).stream()
+                .map(PatientMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public Patient getPatientById(Integer id) {
+    public PatientDTO getById(Integer id) {
         return repository.findById(id)
+                .map(PatientMapper::toDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado"));
     }
 
     @Override
-    public Patient getPatientByIdentification(String identificationNumber) {
-        return repository.findByIdentificationNumber(identificationNumber)
-                .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado por identificación"));
+    public PatientDTO create(CreatePatientDTO dto) {
+        var owner = userRepository.findById(dto.getOwnerDni())
+                .orElseThrow(() -> new IllegalArgumentException("Dueño no encontrado"));
+        var entity = PatientMapper.toEntity(dto, owner);
+        return PatientMapper.toDTO(repository.save(entity));
     }
 
     @Override
-    public Patient getPatientByOwnerDni(String ownerDni) {
-        return repository.findByOwnerDni(ownerDni)
-                .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado por DNI del tutor"));
-    }
-
-    @Override
-    public Patient createPatient(Patient patient) {
-        return repository.save(patient);
-    }
-
-    @Override
-    public Patient updatePatient(Integer id, Patient patient) {
-        Patient existing = getPatientById(id);
-
-        existing.setName(patient.getName());
-        existing.setAge(patient.getAge());
-        existing.setBreed(patient.getBreed());
-        existing.setGender(patient.getGender());
-        existing.setIdentificationNumber(patient.getIdentificationNumber());
-        existing.setOwnerFirstName(patient.getOwnerFirstName());
-        existing.setOwnerLastName(patient.getOwnerLastName());
-        existing.setOwnerDni(patient.getOwnerDni());
-        existing.setOwnerPhone(patient.getOwnerPhone());
-
-        return repository.save(existing);
-    }
-
-    @Override
-    public void deletePatient(Integer id) {
+    public void delete(Integer id) {
         repository.deleteById(id);
     }
 }

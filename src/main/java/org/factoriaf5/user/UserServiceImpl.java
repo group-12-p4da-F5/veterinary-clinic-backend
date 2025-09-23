@@ -1,5 +1,6 @@
 package org.factoriaf5.user;
 
+import org.factoriaf5.user.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,47 +11,60 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final UserRoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, UserRoleRepository roleRepository) {
         this.repository = repository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return repository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return repository.findAll().stream()
+                .map(UserMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public User getUserByDni(String dni) {
+    public UserDTO getUserByDni(String dni) {
         return repository.findById(dni)
+                .map(UserMapper::toDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public UserDTO getUserByEmail(String email) {
         return repository.findByProfileEmail(email)
+                .map(UserMapper::toDTO)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado por email"));
     }
 
     @Override
-    public List<User> getUsersByRole(String roleName) {
-        return repository.findByRole_Name(roleName)
-                .map(List::of)
-                .orElse(List.of());
+    public List<UserDTO> getUsersByRole(String roleName) {
+        return repository.findByRole_Name(roleName).stream()
+                .map(UserMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public User createUser(User user) {
-        return repository.save(user);
+    public UserDTO register(RegisterDTO dto, boolean isAdmin) {
+        String roleName = isAdmin ? "ADMIN" : "USER";
+        UserRole role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado: " + roleName));
+
+        // ⚠️ Aquí NO encriptamos, se guarda la contraseña tal cual
+        User user = UserMapper.toEntity(dto, dto.getPassword(), role);
+
+        return UserMapper.toDTO(repository.save(user));
     }
 
     @Override
-    public User updateUser(String dni, User user) {
-        User existing = getUserByDni(dni);
-        existing.setPasswordHash(user.getPasswordHash());
-        existing.setRole(user.getRole());
-        existing.setProfile(user.getProfile()); // actualizar perfil si viene
-        return repository.save(existing);
+    public UserDTO updateUser(String dni, UpdateUserDTO dto) {
+        User existing = repository.findById(dni)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        UserMapper.updateEntity(existing, dto);
+        return UserMapper.toDTO(repository.save(existing));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.factoriaf5.treatment;
 
-import lombok.RequiredArgsConstructor;
+import org.factoriaf5.treatment.dto.TreatmentDTO;
+import org.factoriaf5.treatment.dto.CreateTreatmentDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,36 +9,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/treatments")
-@RequiredArgsConstructor
 public class TreatmentController {
 
-    private final TreatmentService treatmentService;
+    private final TreatmentService service;
 
-    @GetMapping
-    public ResponseEntity<List<Treatment>> getAllTreatments() {
-        return ResponseEntity.ok(treatmentService.findAll());
+    public TreatmentController(TreatmentService service) {
+        this.service = service;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Treatment> getTreatmentById(@PathVariable Integer id) {
-        return treatmentService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/patient/{id}")
+    public List<TreatmentDTO> getByPatient(@PathVariable Integer id) {
+        return service.getByPatient(id);
     }
 
     @PostMapping
-    public ResponseEntity<Treatment> createTreatment(@RequestBody Treatment treatment) {
-        return ResponseEntity.ok(treatmentService.save(treatment));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Treatment> updateTreatment(@PathVariable Integer id, @RequestBody Treatment treatment) {
-        return ResponseEntity.ok(treatmentService.update(id, treatment));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTreatment(@PathVariable Integer id) {
-        treatmentService.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<TreatmentDTO> create(@RequestBody CreateTreatmentDTO dto) {
+        return ResponseEntity.ok(service.create(dto));
     }
 }

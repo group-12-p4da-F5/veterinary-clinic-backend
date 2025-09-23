@@ -1,44 +1,35 @@
 package org.factoriaf5.treatment;
 
-import lombok.RequiredArgsConstructor;
+import org.factoriaf5.treatment.dto.TreatmentDTO;
+import org.factoriaf5.treatment.dto.CreateTreatmentDTO;
+import org.factoriaf5.patient.PatientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class TreatmentServiceImpl implements TreatmentService {
 
-    private final TreatmentRepository treatmentRepository;
+    private final TreatmentRepository repository;
+    private final PatientRepository patientRepository;
 
-    @Override
-    public List<Treatment> findAll() {
-        return treatmentRepository.findAll();
+    public TreatmentServiceImpl(TreatmentRepository repository, PatientRepository patientRepository) {
+        this.repository = repository;
+        this.patientRepository = patientRepository;
     }
 
     @Override
-    public Optional<Treatment> findById(Integer id) {
-        return treatmentRepository.findById(id);
+    public TreatmentDTO create(CreateTreatmentDTO dto) {
+        var patient = patientRepository.findById(dto.getPatientId())
+                .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado"));
+        var entity = TreatmentMapper.toEntity(dto, patient);
+        return TreatmentMapper.toDTO(repository.save(entity));
     }
 
     @Override
-    public Treatment save(Treatment treatment) {
-        return treatmentRepository.save(treatment);
-    }
-
-    @Override
-    public Treatment update(Integer id, Treatment treatment) {
-        return treatmentRepository.findById(id)
-                .map(existing -> {
-                    treatment.setTreatmentId(id);
-                    return treatmentRepository.save(treatment);
-                })
-                .orElseThrow(() -> new RuntimeException("Treatment not found with id " + id));
-    }
-
-    @Override
-    public void delete(Integer id) {
-        treatmentRepository.deleteById(id);
+    public List<TreatmentDTO> getByPatient(Integer patientId) {
+        return repository.findByPatientPatientId(patientId).stream()
+                .map(TreatmentMapper::toDTO)
+                .toList();
     }
 }

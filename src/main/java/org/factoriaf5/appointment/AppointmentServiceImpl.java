@@ -1,72 +1,65 @@
 package org.factoriaf5.appointment;
 
-import lombok.RequiredArgsConstructor;
+import org.factoriaf5.appointment.dto.AppointmentDTO;
+import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
+import org.factoriaf5.patient.PatientRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-@Transactional
 public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepository repository;
+    private final PatientRepository patientRepository;
 
-    @Override
-    public List<Appointment> getAllAppointments() {
-        return repository.findAll();
+    public AppointmentServiceImpl(AppointmentRepository repository, PatientRepository patientRepository) {
+        this.repository = repository;
+        this.patientRepository = patientRepository;
     }
 
     @Override
-    public Appointment getAppointmentById(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cita no encontrada"));
-    }
+    public AppointmentDTO create(CreateAppointmentDTO dto) {
+        var patient = patientRepository.findById(dto.getPatientId())
+                .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado"));
 
-    @Override
-    public Appointment createAppointment(Appointment appointment, boolean isAdmin) {
-        // Si es urgencia, solo admin puede crear y no cuenta para límite diario
-        if (appointment.getType() == AppointmentType.EMERGENCY) {
-            if (!isAdmin) {
-                throw new IllegalArgumentException("Solo el administrador puede crear citas de urgencia");
+        if (dto.getType().equals("STANDARD")) {
+            LocalDateTime dateTime = dto.getDateTime();
+            if (dateTime == null) throw new IllegalArgumentException("La cita estándar requiere fecha y hora");
+
+            // Validar horario
+            LocalTime time = dateTime.toLocalTime();
+            if (time.isBefore(LocalTime.of(9, 0)) || time.isAfter(LocalTime.of(14, 0))) {
+                throw new IllegalArgumentException("Fuera del horario permitido");
             }
-            appointment.setStatus(AppointmentStatus.PENDING);
-            return repository.save(appointment);
+
+            if (repository.existsByDateTime(dateTime)) {
+                throw new IllegalArgumentException("Ya existe una cita en esa hora");
+            }
         }
 
-        // Validar máximo de 10 citas normales por día
-        LocalDate date = appointment.getDateTime().toLocalDate();
-        long count = repository.countNormalAppointmentsByDate(date);
-        if (count >= 10) {
-            throw new IllegalArgumentException("Máximo de 10 citas normales por día alcanzado");
-        }
-
-        appointment.setStatus(AppointmentStatus.PENDING);
-        return repository.save(appointment);
+        var entity = AppointmentMapper.toEntity(dto, patient);
+        return AppointmentMapper.toDTO(repository.save(entity));
     }
 
     @Override
-    public Appointment updateAppointment(Integer id, Appointment appointment, boolean isAdmin) {
-        Appointment existing = getAppointmentById(id);
-
-        // Solo admin puede marcar como urgencia
-        if (appointment.getType() == AppointmentType.EMERGENCY && !isAdmin) {
-            throw new IllegalArgumentException("Solo el administrador puede marcar una cita como urgencia");
-        }
-
-        existing.setDateTime(appointment.getDateTime());
-        existing.setType(appointment.getType());
-        existing.setReason(appointment.getReason());
-        existing.setStatus(appointment.getStatus());
-        existing.setPatient(appointment.getPatient());
-
-        return repository.save(existing);
+    public List<AppointmentDTO> getAll() {
+        return repository.findAll().stream()
+                .map(AppointmentMapper::toDTO)
+                .toList();
     }
 
     @Override
-    public void deleteAppointment(Integer id) {
+    public List<AppointmentDTO> getByPatient(Integer patientId) {
+        return repository.findByPatientPatientId(patientId).stream()
+                .map(AppointmentMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public void delete(Integer id) {
         repository.deleteById(id);
     }
 }

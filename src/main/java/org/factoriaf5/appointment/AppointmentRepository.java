@@ -1,13 +1,11 @@
 package org.factoriaf5.appointment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-
-    @Query("SELECT COUNT(a) FROM Appointment a WHERE DATE(a.dateTime) = :date AND a.type = 'STANDARD'")
-    long countNormalAppointmentsByDate(@Param("date") LocalDate date);
+    List<Appointment> findByPatientPatientId(Integer patientId);
+    boolean existsByDateTime(LocalDateTime dateTime);
+    List<Appointment> findByDateTimeBetween(LocalDateTime start, LocalDateTime end);
 }

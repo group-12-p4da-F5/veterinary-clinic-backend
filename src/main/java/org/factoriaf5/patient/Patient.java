@@ -19,17 +19,10 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer patientId;
-
     private String name;
     private int age;
     private String breed;
     private String gender;
-    private String identificationNumber;
-
-    private String ownerFirstName;
-    private String ownerLastName;
-    private String ownerDni;
-    private String ownerPhone;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

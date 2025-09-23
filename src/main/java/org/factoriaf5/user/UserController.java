@@ -1,5 +1,6 @@
 package org.factoriaf5.user;
 
+import org.factoriaf5.user.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,33 +17,38 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<UserDTO> getAll() {
         return service.getAllUsers();
     }
 
     @GetMapping("/{dni}")
-    public ResponseEntity<User> getByDni(@PathVariable String dni) {
+    public ResponseEntity<UserDTO> getByDni(@PathVariable String dni) {
         return ResponseEntity.ok(service.getUserByDni(dni));
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<User> getByEmail(@PathVariable String email) {
+    public ResponseEntity<UserDTO> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(service.getUserByEmail(email));
     }
 
     @GetMapping("/role/{roleName}")
-    public List<User> getByRole(@PathVariable String roleName) {
+    public List<UserDTO> getByRole(@PathVariable String roleName) {
         return service.getUsersByRole(roleName);
     }
 
-    @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        return ResponseEntity.ok(service.createUser(user));
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> register(@RequestBody RegisterDTO dto) {
+        return ResponseEntity.ok(service.register(dto, false));
+    }
+
+    @PostMapping("/admin/register")
+    public ResponseEntity<UserDTO> registerByAdmin(@RequestBody RegisterDTO dto) {
+        return ResponseEntity.ok(service.register(dto, true));
     }
 
     @PutMapping("/{dni}")
-    public ResponseEntity<User> update(@PathVariable String dni, @RequestBody User user) {
-        return ResponseEntity.ok(service.updateUser(dni, user));
+    public ResponseEntity<UserDTO> update(@PathVariable String dni, @RequestBody UpdateUserDTO dto) {
+        return ResponseEntity.ok(service.updateUser(dni, dto));
     }
 
     @DeleteMapping("/{dni}")

@@ -1,10 +1,8 @@
 package org.factoriaf5.patient;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+import java.util.List;
 
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
-    Optional<Patient> findByIdentificationNumber(String identificationNumber);
-    Optional<Patient> findByOwnerDni(String ownerDni);
+    List<Patient> findByManagerDni(String dni);
 }

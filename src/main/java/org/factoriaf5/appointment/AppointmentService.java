@@ -1,11 +1,13 @@
 package org.factoriaf5.appointment;
 
+import org.factoriaf5.appointment.dto.AppointmentDTO;
+import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
+
 import java.util.List;
 
 public interface AppointmentService {
-    List<Appointment> getAllAppointments();
-    Appointment getAppointmentById(Integer id);
-    Appointment createAppointment(Appointment appointment, boolean isAdmin);
-    Appointment updateAppointment(Integer id, Appointment appointment, boolean isAdmin);
-    void deleteAppointment(Integer id);
+    AppointmentDTO create(CreateAppointmentDTO dto);
+    List<AppointmentDTO> getAll();
+    List<AppointmentDTO> getByPatient(Integer patientId);
+    void delete(Integer id);
 }

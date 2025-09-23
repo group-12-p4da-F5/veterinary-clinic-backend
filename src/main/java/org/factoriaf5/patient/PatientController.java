@@ -1,5 +1,7 @@
 package org.factoriaf5.patient;
 
+import org.factoriaf5.patient.dto.CreatePatientDTO;
+import org.factoriaf5.patient.dto.PatientDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,39 +17,24 @@ public class PatientController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Patient> getAll() {
-        return service.getAllPatients();
+    @GetMapping("/owner/{dni}")
+    public List<PatientDTO> getByOwner(@PathVariable String dni) {
+        return service.getPatientsByOwner(dni);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getPatientById(id));
-    }
-
-    @GetMapping("/identification/{identificationNumber}")
-    public ResponseEntity<Patient> getByIdentification(@PathVariable String identificationNumber) {
-        return ResponseEntity.ok(service.getPatientByIdentification(identificationNumber));
-    }
-
-    @GetMapping("/owner/{dni}")
-    public ResponseEntity<Patient> getByOwnerDni(@PathVariable String dni) {
-        return ResponseEntity.ok(service.getPatientByOwnerDni(dni));
+    public ResponseEntity<PatientDTO> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Patient> create(@RequestBody Patient patient) {
-        return ResponseEntity.ok(service.createPatient(patient));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Patient> update(@PathVariable Integer id, @RequestBody Patient patient) {
-        return ResponseEntity.ok(service.updatePatient(id, patient));
+    public ResponseEntity<PatientDTO> create(@RequestBody CreatePatientDTO dto) {
+        return ResponseEntity.ok(service.create(dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        service.deletePatient(id);
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
