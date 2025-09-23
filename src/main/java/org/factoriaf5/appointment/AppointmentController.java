@@ -2,6 +2,7 @@ package org.factoriaf5.appointment;
 
 import org.factoriaf5.appointment.dto.AppointmentDTO;
 import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
+import org.factoriaf5.appointment.dto.UpdateAppointmentStatusDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,4 +38,13 @@ public class AppointmentController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<AppointmentDTO> updateStatus(
+            @PathVariable("id") Integer id,
+            @RequestBody UpdateAppointmentStatusDTO dto) {
+
+        return ResponseEntity.ok(service.updateStatus(id, dto));
+    }
+
 }

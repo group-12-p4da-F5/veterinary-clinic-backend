@@ -1,8 +1,14 @@
+-- =======================
+-- Roles
+-- =======================
 CREATE TABLE roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
+-- =======================
+-- Users y perfiles
+-- =======================
 CREATE TABLE users (
     dni VARCHAR(20) PRIMARY KEY,
     password_hash VARCHAR(255) NOT NULL,
@@ -20,21 +26,22 @@ CREATE TABLE profiles (
     CONSTRAINT fk_profiles_users FOREIGN KEY (dni) REFERENCES users(dni)
 );
 
+-- =======================
+-- Pacientes
+-- =======================
 CREATE TABLE patients (
     patient_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     age INT,
     breed VARCHAR(100),
     gender VARCHAR(20),
-    identification_number VARCHAR(100),
-    owner_first_name VARCHAR(100),
-    owner_last_name VARCHAR(100),
-    owner_dni VARCHAR(20),
-    owner_phone VARCHAR(20),
     user_id VARCHAR(20),
     CONSTRAINT fk_patients_users FOREIGN KEY (user_id) REFERENCES users(dni)
 );
 
+-- =======================
+-- Citas
+-- =======================
 CREATE TABLE appointments (
     appointment_id INT AUTO_INCREMENT PRIMARY KEY,
     date_time DATETIME,
@@ -45,6 +52,9 @@ CREATE TABLE appointments (
     CONSTRAINT fk_appointments_patients FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
 );
 
+-- =======================
+-- Tratamientos
+-- =======================
 CREATE TABLE treatments (
     treatment_id INT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(255),

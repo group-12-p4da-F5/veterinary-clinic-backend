@@ -2,6 +2,7 @@ package org.factoriaf5.appointment;
 
 import org.factoriaf5.appointment.dto.AppointmentDTO;
 import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
+import org.factoriaf5.appointment.dto.UpdateAppointmentStatusDTO;
 import org.factoriaf5.patient.PatientRepository;
 import org.springframework.stereotype.Service;
 
@@ -62,4 +63,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void delete(Integer id) {
         repository.deleteById(id);
     }
+    @Override
+public AppointmentDTO updateStatus(Integer appointmentId, UpdateAppointmentStatusDTO dto) {
+    Appointment appointment = repository.findById(appointmentId)
+            .orElseThrow(() -> new IllegalArgumentException("Cita no encontrada"));
+
+    appointment.setStatus(dto.getStatus());
+    Appointment updated = repository.save(appointment);
+    return AppointmentMapper.toDTO(updated);
+}
+
 }
