@@ -1,10 +1,8 @@
 package org.factoriaf5.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "profiles")
@@ -32,6 +30,6 @@ public class UserProfile {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dni", referencedColumnName = "dni")
-
+    @JsonBackReference
     private User user;
 }

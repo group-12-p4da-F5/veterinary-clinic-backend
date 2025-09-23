@@ -2,6 +2,7 @@ package org.factoriaf5.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
@@ -23,4 +24,6 @@ public class User {
     private UserRole role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserProfile profile;}
+    @JsonManagedReference
+    private UserProfile profile;
+}

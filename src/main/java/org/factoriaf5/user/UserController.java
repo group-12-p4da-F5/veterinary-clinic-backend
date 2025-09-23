@@ -25,6 +25,16 @@ public class UserController {
         return ResponseEntity.ok(service.getUserByDni(dni));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(service.getUserByEmail(email));
+    }
+
+    @GetMapping("/role/{roleName}")
+    public List<User> getByRole(@PathVariable String roleName) {
+        return service.getUsersByRole(roleName);
+    }
+
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         return ResponseEntity.ok(service.createUser(user));

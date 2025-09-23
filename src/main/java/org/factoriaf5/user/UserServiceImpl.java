@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByDni(String dni) {
-        return repository.findByDni(dni)
+        return repository.findById(dni)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
@@ -30,6 +30,13 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return repository.findByProfileEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado por email"));
+    }
+
+    @Override
+    public List<User> getUsersByRole(String roleName) {
+        return repository.findByRole_Name(roleName)
+                .map(List::of)
+                .orElse(List.of());
     }
 
     @Override
@@ -42,6 +49,7 @@ public class UserServiceImpl implements UserService {
         User existing = getUserByDni(dni);
         existing.setPasswordHash(user.getPasswordHash());
         existing.setRole(user.getRole());
+        existing.setProfile(user.getProfile()); // actualizar perfil si viene
         return repository.save(existing);
     }
 
