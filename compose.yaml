@@ -1,16 +1,18 @@
+version: "3.8"
+
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:9.4.0
     container_name: mysql-container
-    environment:
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: verysecret
+    restart: always
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ./src/main/resources/data.sql:/docker-entrypoint-initdb.d/2_data.sql
 
 volumes:
   mysql_data:
