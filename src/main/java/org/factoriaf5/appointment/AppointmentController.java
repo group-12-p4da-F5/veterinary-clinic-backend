@@ -1,5 +1,6 @@
 package org.factoriaf5.appointment;
 
+import org.factoriaf5.appointment.dto.UpdateAppointmentDTO;
 import org.factoriaf5.appointment.dto.AppointmentDTO;
 import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
 import org.factoriaf5.appointment.dto.UpdateAppointmentStatusDTO;
@@ -53,5 +54,13 @@ public class AppointmentController {
         LocalDate localDate = LocalDate.parse(date);
         return service.getAvailableHours(localDate);
     }
+    
+    @PatchMapping("/{id}")
+        public ResponseEntity<AppointmentDTO> updateAppointment(
+        @PathVariable Integer id,
+        @RequestBody UpdateAppointmentDTO dto) {
+
+    return ResponseEntity.ok(service.updateAppointment(id, dto));
+}
 
 }
