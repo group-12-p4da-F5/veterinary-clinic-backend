@@ -1,7 +1,8 @@
 package org.factoriaf5.patient;
+
 import org.factoriaf5.patient.dto.CreatePatientDTO;
 import org.factoriaf5.patient.dto.PatientDTO;
-import org.factoriaf5.user.User;
+import org.factoriaf5.user2.User;
 
 public class PatientMapper {
 

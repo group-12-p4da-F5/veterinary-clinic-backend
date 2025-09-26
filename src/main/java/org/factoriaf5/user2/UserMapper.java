@@ -1,6 +1,6 @@
-package org.factoriaf5.user;
+package org.factoriaf5.user2;
 
-import org.factoriaf5.user.dto.*;
+import org.factoriaf5.user2.dto.*;
 
 public class UserMapper {
 
@@ -37,9 +37,13 @@ public class UserMapper {
     }
 
     public static void updateEntity(User user, UpdateUserDTO dto) {
-        if (dto.getFirstName() != null) user.getProfile().setFirstName(dto.getFirstName());
-        if (dto.getLastName() != null) user.getProfile().setLastName(dto.getLastName());
-        if (dto.getEmail() != null) user.getProfile().setEmail(dto.getEmail());
-        if (dto.getPhoneNumber() != null) user.getProfile().setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getFirstName() != null)
+            user.getProfile().setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null)
+            user.getProfile().setLastName(dto.getLastName());
+        if (dto.getEmail() != null)
+            user.getProfile().setEmail(dto.getEmail());
+        if (dto.getPhoneNumber() != null)
+            user.getProfile().setPhoneNumber(dto.getPhoneNumber());
     }
 }

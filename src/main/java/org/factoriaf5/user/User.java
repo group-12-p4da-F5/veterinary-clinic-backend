@@ -1,5 +1,9 @@
 package org.factoriaf5.user;
 
+import java.util.Set;
+
+import org.factoriaf5.role.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,5 +36,5 @@ public class User {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-  Set<RoleEntity> roles;
+  Set<Role> roles;
 }

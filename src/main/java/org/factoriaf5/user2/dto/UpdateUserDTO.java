@@ -1,4 +1,4 @@
-package org.factoriaf5.user.dto;
+package org.factoriaf5.user2.dto;
 
 import lombok.Data;
 

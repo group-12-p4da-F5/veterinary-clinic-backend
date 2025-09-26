@@ -1,7 +1,8 @@
 package org.factoriaf5.patient;
+
 import org.factoriaf5.patient.dto.CreatePatientDTO;
 import org.factoriaf5.patient.dto.PatientDTO;
-import org.factoriaf5.user.UserRepository;
+import org.factoriaf5.user2.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

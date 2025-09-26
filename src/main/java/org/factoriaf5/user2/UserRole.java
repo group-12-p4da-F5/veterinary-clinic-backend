@@ -1,4 +1,4 @@
-package org.factoriaf5.user;
+package org.factoriaf5.user2;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

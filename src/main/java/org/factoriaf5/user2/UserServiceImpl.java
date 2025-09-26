@@ -1,6 +1,6 @@
-package org.factoriaf5.user;
+package org.factoriaf5.user2;
 
-import org.factoriaf5.user.dto.*;
+import org.factoriaf5.user2.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

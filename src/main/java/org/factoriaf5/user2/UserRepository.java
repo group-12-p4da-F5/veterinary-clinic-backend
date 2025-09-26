@@ -1,4 +1,4 @@
-package org.factoriaf5.user;
+package org.factoriaf5.user2;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
