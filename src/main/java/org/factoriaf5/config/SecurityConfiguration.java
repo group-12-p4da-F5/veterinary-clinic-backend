@@ -34,7 +34,11 @@ public class SecurityConfiguration {
             .disable())
         .headers(header -> header
             .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-        .formLogin(form -> form.disable())
+        .formLogin(form -> form
+            .loginProcessingUrl(endpoint + "/login")
+            .successHandler((request, response, authentication) -> {
+              response.setStatus(200);
+            }))
         .logout(out -> out
             .logoutUrl(endpoint + "/logout")
             .invalidateHttpSession(true)
