@@ -1,16 +1,19 @@
 package org.factoriaf5.security;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-@Configuration
-@EnableWebSecurity
-public class JpaUserDetailsService {
+@Service
+public class JpaUserDetailsService implements UserDetailsService {
 
-  @Value("${api-endpoint}")
-  String endpoint;
+  private UserRepository UserRepository;
 
-  private JpaUserDetailsService jpaUserDetailsService;
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'loadUserByUsername'");
+  }
 
 }
