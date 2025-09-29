@@ -22,5 +22,7 @@ public interface UserService {
 
   User save(User user);
 
+  List<UserResponse> getAllUsers();
+
   void deleteUser(String dni);
 }

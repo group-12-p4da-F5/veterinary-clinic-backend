@@ -38,6 +38,9 @@ public class SecurityConfiguration {
             .loginProcessingUrl(endpoint + "/login")
             .successHandler((request, response, authentication) -> {
               response.setStatus(200);
+            })
+            .failureHandler((request, response, exception) -> {
+              response.setStatus(401);
             }))
         .logout(out -> out
             .logoutUrl(endpoint + "/logout")

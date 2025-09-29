@@ -1,5 +1,7 @@
 package org.factoriaf5.user.services;
 
+import java.util.List;
+
 import org.factoriaf5.user.User;
 import org.factoriaf5.user.dtos.UserRegisterRequest;
 import org.factoriaf5.user.dtos.UserResponse;
@@ -22,6 +24,13 @@ public class UserServiceImpl implements UserService {
   public User save(User user) {
 
     return userRepository.save(user);
+  }
+
+  @Override
+  public List<UserResponse> getAllUsers() {
+    return userRepository.findAll().stream()
+        .map(userMapper::toDTO)
+        .toList();
   }
 
   @Override

@@ -37,6 +37,6 @@ public class RegisterService {
     User user = userMapper.toEntity(dto, hashedPassword, roleService.assignDefaultRole());
     User saved = userService.save(user);
 
-    return userMapper.toResponse(saved);
+    return userMapper.toDTO(saved);
   }
 }

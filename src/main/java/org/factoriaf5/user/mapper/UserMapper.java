@@ -31,7 +31,7 @@ public class UserMapper {
     return user;
   }
 
-  public UserResponse toResponse(User user) {
+  public UserResponse toDTO(User user) {
     String roleName = user.getRoles().stream()
         .findFirst()
         .map(Role::getName)
