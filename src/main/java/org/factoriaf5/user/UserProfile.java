@@ -2,6 +2,7 @@ package org.factoriaf5.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity

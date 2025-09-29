@@ -6,24 +6,34 @@ INSERT INTO roles (name) VALUES ('ADMIN'), ('USER');
 -- =======================
 -- Usuario admin inicial
 -- =======================
-INSERT INTO users (dni, password_hash, role_id)
-VALUES ('11111111M', 'margarita123', 1);
+INSERT INTO users (dni, password_hash)
+VALUES ('11111111M', '$2b$12$bY4cLdYNUORkLLgHdjlvP.BsCyjAE7tSuToiaAQekXefykPWbze3O'); -- pas margarita123
 
 INSERT INTO profiles (first_name, last_name, email, phone_number, dni)
 VALUES ('Margarita', 'Vet', 'margarita@vetclinic.com', '600111111', '11111111M');
 
+-- Asignar rol al usuario admin
+INSERT INTO roles_users (user_id, role_id)
+VALUES ('11111111M', 1);
+
 -- =======================
 -- Usuarios normales (ejemplo)
 -- =======================
-INSERT INTO users (dni, password_hash, role_id)
+INSERT INTO users (dni, password_hash)
 VALUES 
-('22222222U', 'user123', 2),
-('33333333U', 'user456', 2);
+('22222222U', 'user123'),
+('33333333U', 'user456');
 
 INSERT INTO profiles (first_name, last_name, email, phone_number, dni)
 VALUES
 ('Carlos', 'Pérez', 'carlos@vetclinic.com', '600222222', '22222222U'),
 ('Ana', 'López', 'ana@vetclinic.com', '600333333', '33333333U');
+
+-- Asignar rol USER a usuarios normales
+INSERT INTO roles_users (user_id, role_id)
+VALUES 
+('22222222U', 2),
+('33333333U', 2);
 
 -- =======================
 -- Pacientes
