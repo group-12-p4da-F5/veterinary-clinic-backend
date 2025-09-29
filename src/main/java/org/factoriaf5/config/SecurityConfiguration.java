@@ -52,6 +52,11 @@ public class SecurityConfiguration {
             .requestMatchers(HttpMethod.POST, endpoint + "/register").permitAll()
             .requestMatchers(endpoint + "/login").hasAnyRole("USER", "ADMIN")
             .requestMatchers(HttpMethod.GET, endpoint + "/private").hasRole("ADMIN")
+            .requestMatchers(
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs/**")
+            .permitAll()
             .anyRequest().authenticated())
         .userDetailsService(jpaUserDetailsService)
         .httpBasic(withDefaults())
