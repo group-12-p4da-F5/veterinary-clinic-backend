@@ -58,3 +58,12 @@ INSERT INTO treatments (description, treatment_date, patient_id)
 VALUES
 ('Vacunación anual', '2025-09-25 11:00:00', 1),
 ('Limpieza dental', '2025-09-26 15:00:00', 2);
+
+-- =======================
+-- Citas de prueba para hoy
+-- =======================
+INSERT INTO appointments (date_time, type, reason, status, patient_id)
+VALUES
+('2025-09-30 09:30:00', 'STANDARD', 'Chequeo rápido', 'PENDING', 1),
+('2025-09-30 11:00:00', 'STANDARD', 'Vacuna anual', 'PENDING', 2),
+('2025-05-30 12:30:00', 'STANDARD', 'Dolor de estómago', 'PENDING', 1);
