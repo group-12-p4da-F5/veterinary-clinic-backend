@@ -1,19 +1,19 @@
 -- =======================
 -- Roles
 -- =======================
-INSERT INTO roles (name) VALUES ('ADMIN'), ('USER');
+INSERT IGNORE INTO roles (name) VALUES ('ADMIN'), ('USER');
 
 -- =======================
 -- Usuario admin inicial
 -- =======================
-INSERT INTO users (dni, password_hash)
+INSERT IGNORE INTO users (dni, password_hash)
 VALUES ('11111111M', '$2b$12$bY4cLdYNUORkLLgHdjlvP.BsCyjAE7tSuToiaAQekXefykPWbze3O'); -- pas margarita123
 
-INSERT INTO profiles (first_name, last_name, email, phone_number, dni)
+INSERT IGNORE INTO profiles (first_name, last_name, email, phone_number, dni)
 VALUES ('Margarita', 'Vet', 'margarita@vetclinic.com', '600111111', '11111111M');
 
 -- Asignar rol al usuario admin
-INSERT INTO roles_users (user_id, role_id)
+INSERT IGNORE INTO roles_users (user_id, role_id)
 VALUES ('11111111M', 1);
 
 -- =======================
