@@ -1,4 +1,4 @@
-package org.factoriaf5.facade.decrypt;
+package org.factoriaf5.encrypt.decrypt;
 
 public class DecryptFacade implements IDecryptFacade {
 

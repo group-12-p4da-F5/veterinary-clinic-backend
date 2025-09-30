@@ -1,4 +1,4 @@
-package org.factoriaf5.facade.encrypt;
+package org.factoriaf5.encrypt.encrypt;
 
 public interface IEncryptFacade {
 

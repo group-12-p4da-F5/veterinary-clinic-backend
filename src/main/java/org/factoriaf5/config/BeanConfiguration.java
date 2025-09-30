@@ -1,11 +1,11 @@
 package org.factoriaf5.config;
 
-import org.factoriaf5.facade.decrypt.DecryptFacade;
-import org.factoriaf5.facade.decrypt.IDecryptFacade;
-import org.factoriaf5.facade.encrypt.EncryptFacade;
-import org.factoriaf5.facade.encrypt.IEncryptFacade;
-import org.factoriaf5.facade.encryptions_systems.Base64System;
-import org.factoriaf5.facade.encryptions_systems.BcryptSystem;
+import org.factoriaf5.encrypt.decrypt.DecryptFacade;
+import org.factoriaf5.encrypt.decrypt.IDecryptFacade;
+import org.factoriaf5.encrypt.encrypt.EncryptFacade;
+import org.factoriaf5.encrypt.encrypt.IEncryptFacade;
+import org.factoriaf5.encrypt.encryptions_systems.Base64System;
+import org.factoriaf5.encrypt.encryptions_systems.BcryptSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
