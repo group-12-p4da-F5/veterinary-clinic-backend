@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
     List<Appointment> findByPatientPatientId(Integer patientId);
+
     boolean existsByDateTime(LocalDateTime dateTime);
+
     List<Appointment> findByDateTimeBetween(LocalDateTime start, LocalDateTime end);
+
+    List<Appointment> findByStatusAndDateTimeBefore(AppointmentStatus status, LocalDateTime dateTime);
 }

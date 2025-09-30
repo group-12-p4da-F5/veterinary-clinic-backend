@@ -44,4 +44,11 @@ public class PatientServiceImpl implements PatientService {
   public void delete(Integer id) {
     repository.deleteById(id);
   }
+
+  @Override
+  public List<PatientDTO> getAllPatients() {
+    return repository.findAll().stream()
+        .map(PatientMapper::toDTO)
+        .toList();
+  }
 }
