@@ -40,7 +40,7 @@ public class PatientController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("")
+    @GetMapping("")
     public List<PatientDTO> index() {
         return service.getAllPatients();
     }

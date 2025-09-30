@@ -1,4 +1,4 @@
-package org.factoriaf5.encrypt.encrypt;
+package org.factoriaf5.facade.encrypt;
 
 public interface IEncoder {
 

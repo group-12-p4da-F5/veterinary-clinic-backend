@@ -1,7 +1,7 @@
 package org.factoriaf5.register.service;
 
-import org.factoriaf5.encrypt.decrypt.IDecryptFacade;
-import org.factoriaf5.encrypt.encrypt.IEncryptFacade;
+import org.factoriaf5.facade.decrypt.IDecryptFacade;
+import org.factoriaf5.facade.encrypt.IEncryptFacade;
 import org.factoriaf5.role.RoleService;
 import org.factoriaf5.user.User;
 import org.factoriaf5.user.dtos.UserRegisterRequest;

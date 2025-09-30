@@ -1,6 +1,6 @@
-package org.factoriaf5.encrypt.encryptions_systems;
+package org.factoriaf5.facade.encryptions_systems;
 
-import org.factoriaf5.encrypt.encrypt.IEncoder;
+import org.factoriaf5.facade.encrypt.IEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class BcryptSystem implements IEncoder {

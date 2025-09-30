@@ -1,8 +1,8 @@
-package org.factoriaf5.encrypt.encryptions_systems;
+package org.factoriaf5.facade.encryptions_systems;
 
 import java.util.Base64;
 
-import org.factoriaf5.encrypt.decrypt.IDecoder;
+import org.factoriaf5.facade.decrypt.IDecoder;
 
 public class Base64System implements IDecoder {
 
