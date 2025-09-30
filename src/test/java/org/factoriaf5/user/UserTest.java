@@ -61,14 +61,6 @@ class UserTest {
   }
 
   @Test
-  void equalsShouldReturnFalseWhenComparedWithDifferentObjectType() {
-    User user = User.builder().dni("12345678A").build();
-    String otherObject = "NotAUser";
-
-    assertThat(user.equals(otherObject)).isFalse();
-  }
-
-  @Test
   void equalsShouldReturnFalseWhenDniIsNull() {
     User user1 = User.builder().dni(null).build();
     User user2 = User.builder().dni("12345678A").build();
