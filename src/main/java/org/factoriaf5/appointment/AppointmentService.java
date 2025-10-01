@@ -10,11 +10,21 @@ import java.util.List;
 
 public interface AppointmentService {
     AppointmentDTO create(CreateAppointmentDTO dto);
+
     List<AppointmentDTO> getAll();
+
     List<AppointmentDTO> getByPatient(Integer patientId);
+
     void delete(Integer id);
+
     AppointmentDTO updateStatus(Integer appointmentId, UpdateAppointmentStatusDTO dto);
+
+    void updateStatus();
+
     List<String> getAvailableHours(LocalDate date);
+
     AppointmentDTO updateAppointment(Integer appointmentId, UpdateAppointmentDTO dto);
+
+    void deleteOldMissedAppointments();
 
 }

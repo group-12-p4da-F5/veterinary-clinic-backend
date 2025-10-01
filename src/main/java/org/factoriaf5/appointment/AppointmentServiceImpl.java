@@ -95,8 +95,16 @@ public class AppointmentServiceImpl implements AppointmentService {
         repository.deleteById(id);
     }
 
-    public void delete() {
+    @Override
+    public void deleteOldMissedAppointments() {
+        LocalDateTime cutoffDate = LocalDateTime.now().minusMonths(3);
 
+        List<Appointment> oldMissedAppointments = repository
+                .findByStatusAndDateTimeBefore(AppointmentStatus.MISSED, cutoffDate);
+
+        if (!oldMissedAppointments.isEmpty()) {
+            repository.deleteAll(oldMissedAppointments);
+        }
     }
 
     @Override
@@ -109,6 +117,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return AppointmentMapper.toDTO(updated);
     }
 
+    @Override
     public void updateStatus() {
         LocalDateTime cutoff = LocalDateTime.now().minusDays(1);
 
