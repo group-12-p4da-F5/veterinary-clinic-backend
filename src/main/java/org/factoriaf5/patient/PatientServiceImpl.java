@@ -51,4 +51,23 @@ public class PatientServiceImpl implements PatientService {
         .map(PatientMapper::toDTO)
         .toList();
   }
+
+  @Override
+  public PatientDTO update(Integer id, CreatePatientDTO dto) {
+    var owner = userRepository.findById(dto.getOwnerDni())
+        .orElseThrow(() -> new IllegalArgumentException("Dueño no encontrado"));
+
+    var patient = repository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Paciente no encontrado"));
+
+    // Actualizamos los campos
+    patient.setName(dto.getName());
+    patient.setAge(dto.getAge());
+    patient.setBreed(dto.getBreed());
+    patient.setGender(dto.getGender());
+    patient.setManager(owner); // 🔹 Aquí está el cambio correcto
+
+    return PatientMapper.toDTO(repository.save(patient));
+  }
+
 }
