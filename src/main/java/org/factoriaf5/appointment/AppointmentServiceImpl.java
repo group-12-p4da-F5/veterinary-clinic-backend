@@ -134,6 +134,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public AppointmentDTO getById(Integer id) {
+        Appointment appointment = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cita no encontrada"));
+        return AppointmentMapper.toDTO(appointment);
+    }
+
+    @Override
     public AppointmentDTO updateAppointment(Integer appointmentId, UpdateAppointmentDTO dto) {
         Appointment appointment = repository.findById(appointmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Cita no encontrada"));

@@ -27,4 +27,5 @@ public interface AppointmentService {
 
     void deleteOldMissedAppointments();
 
+    AppointmentDTO getById(Integer id);
 }
