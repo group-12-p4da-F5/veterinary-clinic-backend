@@ -25,6 +25,11 @@ public class AppointmentController {
         return service.getAll();
     }
 
+    @GetMapping("/by-id/{id}")
+    public ResponseEntity<AppointmentDTO> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
     @GetMapping("/patient/{id}")
     public List<AppointmentDTO> getByPatient(@PathVariable Integer id) {
         return service.getByPatient(id);
@@ -49,18 +54,18 @@ public class AppointmentController {
         return ResponseEntity.ok(service.updateStatus(id, dto));
     }
 
-    @GetMapping("/available/{date}") // Recibe "yyyy-MM-dd"
+    @GetMapping("/available/{date}")
     public List<String> getAvailableHours(@PathVariable String date) {
         LocalDate localDate = LocalDate.parse(date);
         return service.getAvailableHours(localDate);
     }
-    
-    @PatchMapping("/{id}")
-        public ResponseEntity<AppointmentDTO> updateAppointment(
-        @PathVariable Integer id,
-        @RequestBody UpdateAppointmentDTO dto) {
 
-    return ResponseEntity.ok(service.updateAppointment(id, dto));
-}
+    // ← CAMBIADO: De @PatchMapping a @PutMapping
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDTO> updateAppointment(
+            @PathVariable Integer id,
+            @RequestBody UpdateAppointmentDTO dto) {
 
+        return ResponseEntity.ok(service.updateAppointment(id, dto));
+    }
 }
