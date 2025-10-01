@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/v1/patients")
@@ -44,5 +42,10 @@ public class PatientController {
     public List<PatientDTO> index() {
         return service.getAllPatients();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientDTO> update(@PathVariable Integer id, @RequestBody CreatePatientDTO dto) {
+        return ResponseEntity.ok(service.update(id, dto));
+    }
+
 
 }

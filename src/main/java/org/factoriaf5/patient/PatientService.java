@@ -14,5 +14,7 @@ public interface PatientService {
 
     PatientDTO create(CreatePatientDTO dto);
 
+    PatientDTO update(Integer id, CreatePatientDTO dto);
+
     void delete(Integer id);
 }
