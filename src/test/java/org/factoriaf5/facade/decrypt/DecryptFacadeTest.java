@@ -3,33 +3,37 @@ package org.factoriaf5.facade.decrypt;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class DecryptFacadeTest {
 
-  @Autowired
+  @Mock
+  private IDecoder decoder;
+
+  @InjectMocks
   private DecryptFacade facade;
 
   @Test
   @DisplayName("Decode data with Base 64")
   void testDecode() {
-    String type = "base64";
     String data = "password";
+    String encoded = Base64.getEncoder().encodeToString(data.getBytes());
 
-    Encoder encoder = Base64.getEncoder();
-    byte[] bytes = encoder.encode(data.getBytes());
-    String dataEncoded = new String(bytes);
+    when(decoder.decode(encoded)).thenReturn(data);
 
-    String decodedPassword = facade.decode(type, dataEncoded);
+    String decoded = facade.decode("base64", encoded);
 
-    assertThat(decodedPassword, is(equalTo(data)));
+    assertThat(decoded, is(equalTo(data)));
   }
 }
