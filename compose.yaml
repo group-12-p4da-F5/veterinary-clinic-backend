@@ -37,5 +37,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: D:/docker-volumes/mysql_data
+      device: ${MYSQL_VOLUME_PATH}
       o: bind
