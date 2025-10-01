@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 import java.util.Base64;
-import java.util.Base64.Encoder;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

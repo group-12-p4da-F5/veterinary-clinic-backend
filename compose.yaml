@@ -14,7 +14,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 20s  # da tiempo extra al arranque inicial
+      start_period: 20s
 
   backend:
     build: .
