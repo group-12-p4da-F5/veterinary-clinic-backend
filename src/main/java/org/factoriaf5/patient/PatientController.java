@@ -42,10 +42,12 @@ public class PatientController {
     public List<PatientDTO> index() {
         return service.getAllPatients();
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDTO> update(@PathVariable Integer id, @RequestBody CreatePatientDTO dto) {
+    public ResponseEntity<PatientDTO> update(
+            @PathVariable Integer id,
+            @RequestBody CreatePatientDTO dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
-
 
 }
