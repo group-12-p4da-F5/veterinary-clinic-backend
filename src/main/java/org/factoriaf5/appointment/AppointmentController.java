@@ -25,8 +25,7 @@ public class AppointmentController {
         return service.getAll();
     }
 
-    // ← NUEVO: Obtener cita por ID
-    @GetMapping("/{id}")
+    @GetMapping("/by-id/{id}")
     public ResponseEntity<AppointmentDTO> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getById(id));
     }
@@ -60,7 +59,7 @@ public class AppointmentController {
         LocalDate localDate = LocalDate.parse(date);
         return service.getAvailableHours(localDate);
     }
-    
+
     // ← CAMBIADO: De @PatchMapping a @PutMapping
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentDTO> updateAppointment(
