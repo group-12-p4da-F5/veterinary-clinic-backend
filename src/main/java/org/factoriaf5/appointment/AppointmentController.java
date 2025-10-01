@@ -1,0 +1,71 @@
+package org.factoriaf5.appointment;
+
+import org.factoriaf5.appointment.dto.UpdateAppointmentDTO;
+import org.factoriaf5.appointment.dto.AppointmentDTO;
+import org.factoriaf5.appointment.dto.CreateAppointmentDTO;
+import org.factoriaf5.appointment.dto.UpdateAppointmentStatusDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/appointments")
+public class AppointmentController {
+
+    private final AppointmentService service;
+
+    public AppointmentController(AppointmentService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<AppointmentDTO> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping("/by-id/{id}")
+    public ResponseEntity<AppointmentDTO> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
+    @GetMapping("/patient/{id}")
+    public List<AppointmentDTO> getByPatient(@PathVariable Integer id) {
+        return service.getByPatient(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<AppointmentDTO> create(@RequestBody CreateAppointmentDTO dto) {
+        return ResponseEntity.ok(service.create(dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<AppointmentDTO> updateStatus(
+            @PathVariable("id") Integer id,
+            @RequestBody UpdateAppointmentStatusDTO dto) {
+
+        return ResponseEntity.ok(service.updateStatus(id, dto));
+    }
+
+    @GetMapping("/available/{date}")
+    public List<String> getAvailableHours(@PathVariable String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return service.getAvailableHours(localDate);
+    }
+
+    // ← CAMBIADO: De @PatchMapping a @PutMapping
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDTO> updateAppointment(
+            @PathVariable Integer id,
+            @RequestBody UpdateAppointmentDTO dto) {
+
+        return ResponseEntity.ok(service.updateAppointment(id, dto));
+    }
+}
