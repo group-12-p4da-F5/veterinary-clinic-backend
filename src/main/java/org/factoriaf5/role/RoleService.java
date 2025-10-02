@@ -15,7 +15,8 @@ public class RoleService {
   }
 
   public Role getById(Long id) {
-    return repository.findById(id).orElseThrow(); // TODO: se devería devolver una exception concreta
+    return repository.findById(id).orElseThrow(); // TODO: se devería devolver una exception concreta que no dará tiempo
+                                                  // a hacer :()
   }
 
   public Set<Role> assignDefaultRole() {

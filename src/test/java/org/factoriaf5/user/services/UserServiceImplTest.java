@@ -6,8 +6,6 @@ import org.factoriaf5.user.mapper.UserMapper;
 import org.factoriaf5.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +41,8 @@ class UserServiceImplTest {
   @Test
   void getAllUsersShouldReturnMappedList() {
     User user = User.builder().dni("123").build();
-    UserResponse dto = new UserResponse();
+    UserResponse dto = new UserResponse("123", "Carlos", "Pérez", "carlos@example.com", "600111111", "ADMIN");
+
     when(userRepository.findAll()).thenReturn(List.of(user));
     when(userMapper.toDTO(user)).thenReturn(dto);
 
@@ -78,7 +77,8 @@ class UserServiceImplTest {
   void getUserByDniShouldReturnMappedUser() {
     String dni = "123";
     User user = User.builder().dni(dni).build();
-    UserResponse dto = new UserResponse();
+    UserResponse dto = new UserResponse("123", "Carlos", "Pérez", "carlos@example.com", "600111111", "ADMIN");
+
     when(userRepository.findById(dni)).thenReturn(Optional.of(user));
     when(userMapper.toDTO(user)).thenReturn(dto);
 
@@ -101,7 +101,8 @@ class UserServiceImplTest {
   void getUserByEmailShouldReturnMappedUser() {
     String email = "test@example.com";
     User user = User.builder().dni("123").build();
-    UserResponse dto = new UserResponse();
+    UserResponse dto = new UserResponse("123", "Carlos", "Pérez", "carlos@example.com", "600111111", "ADMIN");
+
     when(userRepository.findByProfileEmail(email)).thenReturn(Optional.of(user));
     when(userMapper.toDTO(user)).thenReturn(dto);
 
@@ -124,7 +125,8 @@ class UserServiceImplTest {
   void getUsersByRoleShouldReturnMappedUsers() {
     String roleName = "ADMIN";
     User user = User.builder().dni("123").build();
-    UserResponse dto = new UserResponse();
+    UserResponse dto = new UserResponse("123", "Carlos", "Pérez", "carlos@example.com", "600111111", "ADMIN");
+
     when(userRepository.findByRoles_Name(roleName)).thenReturn(List.of(user));
     when(userMapper.toDTO(user)).thenReturn(dto);
 

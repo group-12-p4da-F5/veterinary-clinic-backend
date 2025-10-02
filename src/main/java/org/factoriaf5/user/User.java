@@ -2,6 +2,7 @@ package org.factoriaf5.user;
 
 import java.util.Set;
 
+import org.factoriaf5.patient.Patient;
 import org.factoriaf5.role.Role;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -43,6 +45,9 @@ public class User {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JsonManagedReference
   private UserProfile profile;
+
+  @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Patient> patients;
 
   @Override
   public boolean equals(Object o) {
